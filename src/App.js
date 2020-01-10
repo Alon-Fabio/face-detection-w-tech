@@ -1,6 +1,7 @@
 import React from 'react';
-import Navigetion from './components/Navigetion/Navigetion';
 import Logo from './components/Logo/Logo';
+import ImageLinkForm from "./components/ImageLinkForm/ImageLinkForm";
+import Navigetion from './components/Navigetion/Navigetion';
 import './App.css';
 
 function App() {
@@ -8,7 +9,8 @@ function App() {
     <div className="App">
       <Navigetion />
       <Logo />
-      {/* <ImageLinkForm />
+      <ImageLinkForm />
+      {/* 
       <FaceRecognition /> */}
     </div>
   );
