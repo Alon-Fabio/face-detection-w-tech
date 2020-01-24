@@ -2,6 +2,7 @@ import React ,{useState,useEffect} from 'react';
 import Clarifai from 'clarifai';
 import Particles from 'react-particles-js';
 import Logo from './components/Logo/Logo';
+import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import ImageLinkForm from "./components/ImageLinkForm/ImageLinkForm";
 import Rank from "./components/Rank/Rank";
 import Navigetion from './components/Navigetion/Navigetion';
@@ -12,7 +13,7 @@ import './App.css';
 const ParticlesParans = {
   "particles": {
     "number": {
-        "value": 200
+        "value": 100
     },
     "size": {
         "value": 3
@@ -37,6 +38,8 @@ function App() {
 
   const [input, setinput] = useState();
   const [submitInput, setsubmitInput] = useState(0);
+  const [imagUrl, setimagUrl] = useState(0);
+  const [faceBoxs, setfaceBoxs] = useState({});
 
   const SetInputState = (newState) => {
     setinput(newState.target.value);
@@ -44,19 +47,39 @@ function App() {
   };
 
   const SubmitPicUrl = () => {
-    console.log('Click');
+    setimagUrl(input);
     setsubmitInput(submitInput+1);
-  }
+  };
+
+  const FindFaceLocation = (faceBoxs) => {
+    const image = document.getElementById('inputimage');
+    const StyleImag = window.getComputedStyle(image, null);
+    const heigth = Number(StyleImag.height.slice(0,-2));
+    const width = Number(StyleImag.width.slice(0,-2));
+    console.log(width,heigth);
+    console.log ({
+      leftCol: faceBoxs[0].left_col * width,
+      topRow: faceBoxs.top_row * heigth,
+      rightCol: width - (faceBoxs.right_col * width),
+      bottomRow: heigth - (faceBoxs.bottom_row * heigth)
+    })
+  };
+
+  const DisplayFaceBox = ()=>{
+    
+  };
 
   useEffect(()=>{
     if(submitInput>0) {
       app.models.initModel({id: Clarifai.FACE_DETECT_MODEL})
-      .then(generalModel => {
-        return generalModel.predict(input);
+      .then(FACE_DETECT => {
+        return FACE_DETECT.predict(input);
       })
       .then(response => {
-        // var concepts = response['outputs'][0]['data']['concepts'];
-        console.log(response)
+        var concepts = response.outputs[0].data.regions;
+        let Boxs = concepts.map((box, index)=> FindFaceLocation(box.region_info.bounding_box[index]));
+        console.log(Boxs);
+        setfaceBoxs((faceBoxs)=>[faceBoxs,Boxs]);
       }).catch(err=>console.log("LOG ERR" + err));
     }
 
@@ -69,8 +92,7 @@ function App() {
       <Logo />
       <Rank />
       <ImageLinkForm GetPicUrl={(event)=>SetInputState(event)} SubmitUrl={SubmitPicUrl} />
-      {/* 
-      <FaceRecognition /> */}
+      <FaceRecognition UrlToShow={imagUrl}/>
     </div>
   );
 }
