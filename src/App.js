@@ -39,8 +39,8 @@ function App() {
   const [input, setinput] = useState();
   const [submitInput, setsubmitInput] = useState(0);
   const [imagUrl, setimagUrl] = useState(0);
-  const [faceBoxs, setfaceBoxs] = useState({});
-
+  const [faceBoxs, setfaceBoxs] = useState([]);
+  const FaceObj = {}
   const SetInputState = (newState) => {
     setinput(newState.target.value);
     console.log(input);
@@ -51,19 +51,23 @@ function App() {
     setsubmitInput(submitInput+1);
   };
 
-  const FindFaceLocation = (faceBoxs) => {
+  const doSomeThing = () => {
+    console.log(faceBoxs);
+  }
+
+  const FindFaceLocation = (ApifaceBoxs) => {
     const image = document.getElementById('inputimage');
     const StyleImag = window.getComputedStyle(image, null);
-    const heigth = Number(StyleImag.height.slice(0,-2));
-    const width = Number(StyleImag.width.slice(0,-2));
-    console.log(width,heigth);
-    console.log ({
-      leftCol: faceBoxs[0].left_col * width,
-      topRow: faceBoxs.top_row * heigth,
-      rightCol: width - (faceBoxs.right_col * width),
-      bottomRow: heigth - (faceBoxs.bottom_row * heigth)
-    })
+    const heigth = Math.floor(Number(StyleImag.height.slice(0,-2)));
+    const width = Math.floor(Number(StyleImag.width.slice(0,-2)));
+      return {
+      leftCol: (ApifaceBoxs.left_col * width),
+      topRow: (ApifaceBoxs.top_row * heigth),
+      rightCol: (width) - (ApifaceBoxs.right_col * width),
+      bottomRow: (heigth) - (ApifaceBoxs.bottom_row * heigth)
+    }
   };
+
 
   const DisplayFaceBox = ()=>{
     
@@ -77,9 +81,7 @@ function App() {
       })
       .then(response => {
         var concepts = response.outputs[0].data.regions;
-        let Boxs = concepts.map((box, index)=> FindFaceLocation(box.region_info.bounding_box[index]));
-        console.log(Boxs);
-        setfaceBoxs((faceBoxs)=>[faceBoxs,Boxs]);
+        setfaceBoxs(()=>concepts.map((box)=> FindFaceLocation(box.region_info.bounding_box)));
       }).catch(err=>console.log("LOG ERR" + err));
     }
 
@@ -88,11 +90,11 @@ function App() {
   return (
     <div className="App">
       <Particles className='Particles' params={ParticlesParans}/>
-      <Navigetion />
+      <Navigetion doSomeThing={doSomeThing} />
       <Logo />
       <Rank />
       <ImageLinkForm GetPicUrl={(event)=>SetInputState(event)} SubmitUrl={SubmitPicUrl} />
-      <FaceRecognition UrlToShow={imagUrl}/>
+      <FaceRecognition UrlToShow={imagUrl} Boxes={faceBoxs}/>
     </div>
   );
 }
