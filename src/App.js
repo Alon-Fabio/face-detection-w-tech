@@ -2,6 +2,8 @@ import React ,{useState,useEffect} from 'react';
 import Clarifai from 'clarifai';
 import Particles from 'react-particles-js';
 import Logo from './components/Logo/Logo';
+import Register from './components/Register/Register';
+import SingIn from './components/SingIn/SingIn';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import ImageLinkForm from "./components/ImageLinkForm/ImageLinkForm";
 import Rank from "./components/Rank/Rank";
@@ -40,7 +42,30 @@ function App() {
   const [submitInput, setsubmitInput] = useState(0);
   const [imagUrl, setimagUrl] = useState(0);
   const [faceBoxs, setfaceBoxs] = useState([]);
-  const FaceObj = {}
+  const [route, setroute] = useState('signin');
+  const [isSignedIn, setisSignedIn] = useState(false);
+
+  const showParticles = (window.screen.width + window.screen.height)/18;
+
+  const ParticlesParans = {
+    "particles": {
+      "number": {
+          "value": showParticles
+      },
+      "size": {
+          "value": 3
+      }
+  },
+  "interactivity": {
+      "events": {
+          "onhover": {
+              "enable": true,
+              "mode": "repulse"
+          }
+      }
+  }
+  }
+
   const SetInputState = (newState) => {
     setinput(newState.target.value);
     console.log(input);
@@ -50,10 +75,6 @@ function App() {
     setimagUrl(input);
     setsubmitInput(submitInput+1);
   };
-
-  const doSomeThing = () => {
-    console.log(faceBoxs);
-  }
 
   const FindFaceLocation = (ApifaceBoxs) => {
     const image = document.getElementById('inputimage');
@@ -68,10 +89,16 @@ function App() {
     }
   };
 
-
-  const DisplayFaceBox = ()=>{
+  const ChangeRoute = (goTo) => {
+    if (goTo === 'signin') {
+      setisSignedIn(false);
+    } else if (goTo === 'home') {
+    setisSignedIn(true);
+    }
     
-  };
+    setroute(String(goTo));
+    console.log("goTo :" + goTo + "route :" +route)
+  }
 
   useEffect(()=>{
     if(submitInput>0) {
@@ -90,11 +117,20 @@ function App() {
   return (
     <div className="App">
       <Particles className='Particles' params={ParticlesParans}/>
-      <Navigetion doSomeThing={doSomeThing} />
-      <Logo />
-      <Rank />
-      <ImageLinkForm GetPicUrl={(event)=>SetInputState(event)} SubmitUrl={SubmitPicUrl} />
-      <FaceRecognition UrlToShow={imagUrl} Boxes={faceBoxs}/>
+      <Navigetion singedIn={isSignedIn} onRouteChange={ChangeRoute} />
+      {route === 'home' ?
+      <div>
+        <Logo />
+        <Rank />
+        <ImageLinkForm GetPicUrl={(event)=>SetInputState(event)} SubmitUrl={SubmitPicUrl} />
+        <FaceRecognition UrlToShow={imagUrl} Boxes={faceBoxs}/>
+      </div> :
+      (route === 'signin' ?
+        <SingIn onRouteChange={ChangeRoute} /> :
+        <Register onRouteChange={ChangeRoute}/>
+      )
+      
+      }
     </div>
   );
 }
