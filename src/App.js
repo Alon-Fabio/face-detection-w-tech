@@ -68,7 +68,6 @@ function App() {
 
   const SetInputState = (newState) => {
     setinput(newState.target.value);
-    console.log(input);
   };
 
   const SubmitPicUrl = () => {
@@ -93,11 +92,10 @@ function App() {
     if (goTo === 'signin') {
       setisSignedIn(false);
     } else if (goTo === 'home') {
-    setisSignedIn(true);
+      setisSignedIn(true);
     }
     
     setroute(String(goTo));
-    console.log("goTo :" + goTo + "route :" +route)
   }
 
   useEffect(()=>{
