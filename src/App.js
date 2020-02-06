@@ -105,7 +105,7 @@ function App() {
       name:newUser.name,
       email:newUser.email,
       enteries:newUser.enteries,
-      juined:newUser.juined}
+      juined:newUserss.juined}
     )
   }
 
