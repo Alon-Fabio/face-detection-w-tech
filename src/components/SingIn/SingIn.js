@@ -2,33 +2,41 @@ import React, {useEffect, useState} from 'react';
 
 const SingIn = ({onRouteChange}) => {
 
-    const [userPass, setuserPass] = useState();
-    const [userEmail, setuserEmail] = useState();
-    const [onSubmit, setonSubmit] = useState(true);
+    const [userLIPass, setuserLIPass] = useState();
+    const [userLIEmail, setuserLIEmail] = useState("");
+    const [onSubmit, setonSubmit] = useState(0);
 
     const onUserPassChange = (e) =>{
-        setuserPass(e.target.value)
+        setuserLIPass(e.target.value)
     };
     const onUserEmailChange = (e) =>{
-        setuserEmail(e.target.value)
+        setuserLIEmail(e.target.value)
     };
 
     const onSubmitSignin = ()=>{
         setonSubmit(onSubmit +1)
-        // onRouteChange('home')
     }
 
     useEffect(()=>{
-        fetch('http://localhost:9000/signin', {
-            method:'post',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                email:userEmail,
-                password:userPass
+        if (userLIEmail.length > 0) {
+                fetch('http://localhost:9000/signin', {
+                method:'post',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    email:userLIEmail,
+                    password:userLIPass
+                })
             })
-        })
+            .then((res)=>res.json())
+            .then((data)=>{
+                if (data === "sucsses"){
+                    onRouteChange('home')
+                }
+            })
+        }
+        
       },[onSubmit])
-
+      
     return(
         <div className='SingIn br3 ba shadow-5 b--black-20 mv4 w-100 w-50-m w-25-l mw50 center'>
             <main className="pa4 black-80">

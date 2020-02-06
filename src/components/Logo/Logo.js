@@ -3,9 +3,9 @@ import './Logo.css';
 import Tilt from 'react-tilt';
 import laugh from './laugh.png';
 
-const Logo = () => {
+const Logo = ({click}) => {
     return(
-        <div className='Logo ma4 mt0'>
+        <div onClick={click} className='Logo ma4 mt0'>
             <Tilt
                 className="Logo-tilthover br2 shadow-2 Tilt"
                 options={{ max : 50 }}

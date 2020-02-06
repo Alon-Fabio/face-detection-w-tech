@@ -44,8 +44,15 @@ function App() {
   const [faceBoxs, setfaceBoxs] = useState([]);
   const [route, setroute] = useState('signin');
   const [isSignedIn, setisSignedIn] = useState(false);
+  const [user, setuser] = useState({
+    id:"",
+    name:"",
+    email:"",
+    enteries:"",
+    juined:""
+  });
 
-  const showParticles = (window.screen.width + window.screen.height)/18;
+  const showParticles = (window.screen.width + window.screen.height)/50;
 
   const ParticlesParans = {
     "particles": {
@@ -64,6 +71,9 @@ function App() {
           }
       }
   }
+  }
+  const dosumthing =() =>{
+    console.log(user);
   }
 
   const SetInputState = (newState) => {
@@ -88,6 +98,17 @@ function App() {
     }
   };
 
+  const onUserChange =(newUser)=>{
+    setuser(
+      {...user,
+      id:newUser.id,
+      name:newUser.name,
+      email:newUser.email,
+      enteries:newUser.enteries,
+      juined:newUser.juined}
+    )
+  }
+
   const ChangeRoute = (goTo) => {
     if (goTo === 'signin') {
       setisSignedIn(false);
@@ -97,7 +118,7 @@ function App() {
     
     setroute(String(goTo));
   }
-
+  
   useEffect(()=>{
     if(submitInput>0) {
       app.models.initModel({id: Clarifai.FACE_DETECT_MODEL})
@@ -118,14 +139,14 @@ function App() {
       <Navigetion singedIn={isSignedIn} onRouteChange={ChangeRoute} />
       {route === 'home' ?
       <div>
-        <Logo />
-        <Rank />
+        <Logo click={dosumthing}/>
+        <Rank userInfo={user} />
         <ImageLinkForm GetPicUrl={(event)=>SetInputState(event)} SubmitUrl={SubmitPicUrl} />
         <FaceRecognition UrlToShow={imagUrl} Boxes={faceBoxs}/>
       </div> :
       (route === 'signin' ?
         <SingIn onRouteChange={ChangeRoute} /> :
-        <Register onRouteChange={ChangeRoute}/>
+        <Register onReUserChange={onUserChange} onRouteChange={ChangeRoute}/>
       )
       
       }
