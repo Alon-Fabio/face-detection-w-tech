@@ -105,7 +105,7 @@ function App() {
       name:newUser.name,
       email:newUser.email,
       enteries:newUser.enteries,
-      juined:newUserss.juined}
+      juined:newUser.juined}
     )
   }
 
@@ -126,9 +126,21 @@ function App() {
         return FACE_DETECT.predict(input);
       })
       .then(response => {
-        var concepts = response.outputs[0].data.regions;
+        let concepts = response.outputs[0].data.regions;
         setfaceBoxs(()=>concepts.map((box)=> FindFaceLocation(box.region_info.bounding_box)));
-      }).catch(err=>console.log("LOG ERR" + err));
+        // if (response){
+        //   fetch('http://localhost:9000/image', {
+        //         method:'post',
+        //         headers: {'Content-Type': 'application/json'},
+        //         body: JSON.stringify({
+        //         id:user.id
+        //     }).then((res)=>res.json())
+            
+        //   })
+        // } **Fetch gives an err '.then not a function' server doesn't get the promis.
+      }).catch(err=>{
+        alert('somthing went wrong.. please check your URL and try again');
+        console.log("LOG ERR" + err)});
     }
 
   },[submitInput])

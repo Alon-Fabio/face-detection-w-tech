@@ -54,11 +54,11 @@ const Register = ({onRouteChange,onReUserChange}) => {
                 <legend className="f4 fw6 ph0 mh0">Be one of us</legend>
                 <div className="mt3">
                     <label className="db fw6 lh-copy f6" htmlFor="name-address">Name</label>
-                    <input onChange={onUserReEmailChange} className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="text" name="name"  id="userName"></input>
+                    <input onChange={onUserReNameChange} className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="text" name="name"  id="userName"></input>
                 </div>
                 <div className="mt3">
                     <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
-                    <input onChange={onUserReNameChange} className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="email" name="email-address"  id="email-address"></input>
+                    <input onChange={onUserReEmailChange} className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="email" name="email-address"  id="email-address"></input>
                 </div>
                 <div className="mv3">
                     <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
