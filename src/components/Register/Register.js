@@ -62,11 +62,11 @@ const Register = ({onRouteChange,onReUserChange}) => {
                 </div>
                 <div className="mv3">
                     <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
-                    <input onChange={onUserRePassChange} autoComplete='' className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="password" name="password"  id="password"></input>
+                    <input onChange={onUserRePassChange} autoComplete='' className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="password" name="password"  id="password"></input>
                 </div>
                 </fieldset>
                 <div className="">
-                <input onClick={onSubmitRegister} className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="submit" value="register"></input>
+                <input onClick={onSubmitRegister} className="ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="submit" value="register"></input>
                 </div>
                 <div className="lh-copy mt3">
                 </div>

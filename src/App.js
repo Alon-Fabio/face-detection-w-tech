@@ -12,24 +12,6 @@ import './App.css';
 /*Import the png logo*/
 // import laugh from './components/Logo/laugh.png';
 
-const ParticlesParans = {
-  "particles": {
-    "number": {
-        "value": 100
-    },
-    "size": {
-        "value": 3
-    }
-},
-"interactivity": {
-    "events": {
-        "onhover": {
-            "enable": true,
-            "mode": "repulse"
-        }
-    }
-}
-}
 
 const app = new Clarifai.App({
   apiKey: '3634fc260367403ca7e2a34a0b974b91'
@@ -52,12 +34,16 @@ function App() {
     juined:""
   });
 
-  const showParticles = (window.screen.width + window.screen.height)/50;
+  const showParticles = (screenWidth) => {
+      if (window.screen.width < 1000){
+        return 30;
+      }else { return 200};
+  };
 
   const ParticlesParans = {
     "particles": {
       "number": {
-          "value": showParticles
+          "value": showParticles(window.screen.width)
       },
       "size": {
           "value": 3
