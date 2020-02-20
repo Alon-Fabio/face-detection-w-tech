@@ -37,7 +37,7 @@ function App() {
   const showParticles = (screenWidth) => {
       if (window.screen.width < 1000){
         return 30;
-      }else { return 200};
+      }else { return 150};
   };
 
   const ParticlesParans = {
@@ -90,7 +90,7 @@ function App() {
       id:newUser.id,
       name:newUser.name,
       email:newUser.email,
-      enteries:newUser.enteries,
+      entries:newUser.entries,
       juined:newUser.juined}
     )
   }
@@ -137,8 +137,8 @@ function App() {
                 body: JSON.stringify({
                 id:user.id
             })}).then((res)=>res.json())
-            .then((userEnteris)=>{
-              setuser({...user, enteriess:userEnteris});
+            .then((userEntris)=>{
+              setuser({...user, entries:userEntris});
             })
         }
       })
