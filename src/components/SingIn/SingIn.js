@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-const SingIn = ({onRouteChange}) => {
+const SingIn = ({onRouteChange,onReUserChange}) => {
 
     const [userLIPass, setuserLIPass] = useState();
     const [userLIEmail, setuserLIEmail] = useState("");
@@ -28,10 +28,25 @@ const SingIn = ({onRouteChange}) => {
                 })
             })
             .then((res)=>res.json())
-            .then((data)=>{
-                if (data === "sucsses"){
-                    onRouteChange('home')
+            .then((user)=>{
+                    // Fix this if statment
+                if (user.email){
+                    console.log(user.email)
+
+                }else{
+                    console.log(user.err)
                 }
+
+                // if ("Unabel to register"!==user && user.length){
+                //     console.log(user);
+                //     onRouteChange('home');
+                //     onReUserChange(user);
+                // } else if (user === "Your Email or Password is incorrect") {
+                //     alert(user);
+                // } else {
+                //     console.log(user);
+                //     alert("Something went wrong.. please try again");
+                // }
             })
         }
         

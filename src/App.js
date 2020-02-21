@@ -162,7 +162,7 @@ function App() {
         <FaceRecognition UrlToShow={imagUrl} Boxes={faceBoxs}/>
       </div> :
       (route === 'signin' ?
-        <SingIn onRouteChange={ChangeRoute} /> :
+        <SingIn onRouteChange={ChangeRoute} onReUserChange={onUserChange} /> :
         <Register onReUserChange={onUserChange} onRouteChange={ChangeRoute}/>
       )
       
