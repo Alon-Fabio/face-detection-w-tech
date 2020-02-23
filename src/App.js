@@ -104,23 +104,6 @@ function App() {
     
     setroute(String(goTo));
   }
-  // useEffect(()=>{
-  //   fetch('http://localhost:9000/image', {
-  //               method:'post',
-  //               headers: {'Content-Type': 'application/json'},
-  //               body: JSON.stringify({
-  //               id:user.id
-  //           })}).then((res)=>res.json())
-  //           .then((user)=>{
-  //             console.log(user);
-  //             return user;
-  //           })
-  //           .catch(err=>{
-  //             alert('somthing went wrong.. please check your URL and try again')
-  //             console.log("LOG ERR" + err)})
-  // },[submitInput])
-
-
   useEffect(()=>{
     if(submitInput>0) {
       app.models.initModel({id: Clarifai.FACE_DETECT_MODEL})
@@ -144,8 +127,8 @@ function App() {
       })
       
           .catch(err=>{
-        alert('somthing went wrong.. please check your URL and try again');
-        console.log("LOG ERR" + err)});
+            alert('somthing went wrong.. please check your URL and try again');
+            console.log("LOG ERR" + err)});
     }
 
   },[submitInput])
@@ -161,10 +144,10 @@ function App() {
         <ImageLinkForm GetPicUrl={(event)=>SetInputState(event)} SubmitUrl={SubmitPicUrl} />
         <FaceRecognition UrlToShow={imagUrl} Boxes={faceBoxs}/>
       </div> :
-      (route === 'signin' ?
+      route === 'signin' ?
         <SingIn onRouteChange={ChangeRoute} onReUserChange={onUserChange} /> :
         <Register onReUserChange={onUserChange} onRouteChange={ChangeRoute}/>
-      )
+      
       
       }
     </div>

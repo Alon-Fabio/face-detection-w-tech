@@ -29,24 +29,12 @@ const SingIn = ({onRouteChange,onReUserChange}) => {
             })
             .then((res)=>res.json())
             .then((user)=>{
-                    // Fix this if statment
-                if (user.email){
-                    console.log(user.email)
-
-                }else{
-                    console.log(user.err)
+                if (user.email) {
+                    onReUserChange(user);
+                    onRouteChange('home');
+                } else {
+                    alert('User name or Password is incorrect');
                 }
-
-                // if ("Unabel to register"!==user && user.length){
-                //     console.log(user);
-                //     onRouteChange('home');
-                //     onReUserChange(user);
-                // } else if (user === "Your Email or Password is incorrect") {
-                //     alert(user);
-                // } else {
-                //     console.log(user);
-                //     alert("Something went wrong.. please try again");
-                // }
             })
         }
         

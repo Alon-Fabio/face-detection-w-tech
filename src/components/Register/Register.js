@@ -39,8 +39,8 @@ const Register = ({onRouteChange,onReUserChange}) => {
             .then((res)=>res.json())
             .then((user)=>{
                 if ("Unabel to register"!==user){
-                    onRouteChange('home')
-                    onReUserChange(user)
+                    onReUserChange(user);
+                    onRouteChange('home');
                 }
                 console.log(user)
             })
