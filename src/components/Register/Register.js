@@ -26,7 +26,7 @@ const Register = ({onRouteChange,onReUserChange}) => {
 
     useEffect(()=>{
         
-        if (userReEmail.length > 0) {
+        if (userReEmail.length > 0 && userReName.length > 0 && userRePass.length > 0) {
                 fetch('http://localhost:9000/register', {
                 method:'post',
                 headers: {'Content-Type': 'application/json'},
@@ -43,7 +43,7 @@ const Register = ({onRouteChange,onReUserChange}) => {
                     onRouteChange('home');
                 }
                 console.log(user)
-            })
+            }).catch(err=>console.log(err))
         }
         
       },[onRegister])

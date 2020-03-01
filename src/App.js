@@ -22,7 +22,7 @@ function App() {
 
   const [input, setinput] = useState();
   const [submitInput, setsubmitInput] = useState(0);
-  const [imagUrl, setimagUrl] = useState(0);
+  const [imagUrl, setimagUrl] = useState("");
   const [faceBoxs, setfaceBoxs] = useState([]);
   const [route, setroute] = useState('signin');
   const [isSignedIn, setisSignedIn] = useState(false);
@@ -30,8 +30,8 @@ function App() {
     id:"",
     name:"",
     email:"",
-    enteries:"",
-    juined:""
+    entries:"",
+    joined:""
   });
 
   const showParticles = (screenWidth) => {
@@ -91,12 +91,25 @@ function App() {
       name:newUser.name,
       email:newUser.email,
       entries:newUser.entries,
-      juined:newUser.juined}
+      joined:newUser.joined}
     )
+  }
+
+  const onResetUser = () =>{
+    setuser({
+      id:"",
+      name:"",
+      email:"",
+      entries:"",
+      joined:""
+    });
+    setimagUrl("");
+    setfaceBoxs([]);
   }
 
   const ChangeRoute = (goTo) => {
     if (goTo === 'signin') {
+      onResetUser();
       setisSignedIn(false);
     } else if (goTo === 'home') {
       setisSignedIn(true);
@@ -122,7 +135,9 @@ function App() {
             })}).then((res)=>res.json())
             .then((userEntris)=>{
               setuser({...user, entries:userEntris});
-            })
+            }).catch(err=>{
+              alert('somthing went wrong.. please check your URL and try again');
+              console.log("LOG ERR" + err)});
         }
       })
       
