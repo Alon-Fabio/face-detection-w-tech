@@ -119,16 +119,18 @@ function App() {
   }
   useEffect(()=>{
     if(submitInput>0) {
-      app.models.initModel({id: Clarifai.FACE_DETECT_MODEL})
-      .then(FACE_DETECT => {
-        return FACE_DETECT.predict(input);
-      })
+      fetch('http://localhost:9000/imageUrl', {
+                method:'post',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                input: input
+            })}).then((res)=>res.json())
       .then(response => {
         let concepts = response.outputs[0].data.regions;
         setfaceBoxs(()=>concepts.map((box)=> FindFaceLocation(box.region_info.bounding_box)));
         if (response){
           fetch('http://localhost:9000/image', {
-                method:'post',
+                method:'put',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
                 id:user.id
