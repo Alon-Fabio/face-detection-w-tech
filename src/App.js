@@ -13,10 +13,6 @@ import './App.css';
 // import laugh from './components/Logo/laugh.png';
 
 
-const app = new Clarifai.App({
-  apiKey: '3634fc260367403ca7e2a34a0b974b91'
- });
-
 
 function App() {
 
@@ -119,33 +115,21 @@ function App() {
   }
   useEffect(()=>{
     if(submitInput>0) {
-      fetch('http://localhost:9000/imageUrl', {
+      fetch('http://localhost:9000/imageApi', {
                 method:'post',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
-                input: input
-            })}).then((res)=>res.json())
-      .then(response => {
-        let concepts = response.outputs[0].data.regions;
-        setfaceBoxs(()=>concepts.map((box)=> FindFaceLocation(box.region_info.bounding_box)));
-        if (response){
-          fetch('http://localhost:9000/image', {
-                method:'put',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
+                input: input,
                 id:user.id
             })}).then((res)=>res.json())
-            .then((userEntris)=>{
-              setuser({...user, entries:userEntris});
-            }).catch(err=>{
-              alert('somthing went wrong.. please check your URL and try again');
-              console.log("LOG ERR" + err)});
-        }
+      .then(response => {
+        let concepts = response.APIres.outputs[0].data.regions;
+        setfaceBoxs(()=>concepts.map((box)=> FindFaceLocation(box.region_info.bounding_box)));
+        setuser({...user, entries:response.entries});
       })
-      
-          .catch(err=>{
-            alert('somthing went wrong.. please check your URL and try again');
-            console.log("LOG ERR" + err)});
+      .catch(err=>{
+        alert('somthing went wrong.. please check your URL and try again');
+        console.log("LOG ERR" + err)});
     }
 
   },[submitInput])
