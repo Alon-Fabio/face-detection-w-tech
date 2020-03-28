@@ -6,6 +6,29 @@ const Register = ({onRouteChange,onReUserChange}) => {
     const [userReEmail, setuserReEmail] = useState("");
     const [userReName, setuserReNeme] = useState("");
     const [onRegister, setonRegister] = useState(0);
+    
+    const ServerCall = () => {
+            if (userReEmail.length > 0 && userReName.length > 0 && userRePass.length > 0) {
+                fetch('http://localhost:9000/register', {
+                method:'post',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    email:userReEmail,
+                    password:userRePass,
+                    name:userReName
+                })
+            })
+            .then((res)=>res.json())
+            .then((user)=>{
+                if ("Unabel to register"!==user){
+                    onReUserChange(user);
+                    onRouteChange('home');
+                } else if ("Unabel to register"===user) {
+                    alert("Something went wrong..\nPlease try a differnt Email or try again later")
+                }
+            }).catch(err=>console.log(err))
+        }
+    }
 
     const onSubmitRegister = ()=>{
         setonRegister(onRegister +1)
@@ -25,26 +48,8 @@ const Register = ({onRouteChange,onReUserChange}) => {
     };
 
     useEffect(()=>{
-        
-        if (userReEmail.length > 0 && userReName.length > 0 && userRePass.length > 0) {
-                fetch('http://localhost:9000/register', {
-                method:'post',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    email:userReEmail,
-                    password:userRePass,
-                    name:userReName
-                })
-            })
-            .then((res)=>res.json())
-            .then((user)=>{
-                if ("Unabel to register"!==user){
-                    onReUserChange(user);
-                    onRouteChange('home');
-                }
-                console.log(user)
-            }).catch(err=>console.log(err))
-        }
+        console.log("useEffect register running")
+        ServerCall()
         
       },[onRegister])
 
