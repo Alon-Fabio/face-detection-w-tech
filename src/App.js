@@ -137,19 +137,16 @@ function App() {
   return (
     <div className="App">
       <Particles className='Particles' params={ParticlesParans}/>
-      <Navigetion singedIn={isSignedIn} onRouteChange={ChangeRoute} />
       {route === 'home' ?
       <div>
+        <Navigetion singedIn={isSignedIn} onRouteChange={ChangeRoute} />
         <Logo click={dosumthing}/>
         <Rank userInfo={user} />
         <ImageLinkForm GetPicUrl={(event)=>SetInputState(event)} SubmitUrl={SubmitPicUrl} />
         <FaceRecognition UrlToShow={imagUrl} Boxes={faceBoxs}/>
       </div> :
-      route === 'signin' ?
-        <SingIn onRouteChange={ChangeRoute} onReUserChange={onUserChange} /> :
-        <Register onReUserChange={onUserChange} onRouteChange={ChangeRoute}/>
-      
-      
+      route === 'signin' &&
+        <SingIn onRouteChange={ChangeRoute} onReUserChange={onUserChange} />
       }
     </div>
   );
