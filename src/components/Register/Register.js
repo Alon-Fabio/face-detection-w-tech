@@ -24,7 +24,7 @@ const Register = ({onRouteChange,onReUserChange}) => {
                     onReUserChange(user);
                     onRouteChange('home');
                 } else if ("Unabel to register"===user) {
-                    alert("Oh oh.. something went wrong..\nPlease try a differnt Email or try again later")
+                    alert("Oh oh... something went wrong..\nPlease try a differnt Email or try again later")
                 }
             }).catch(err=>console.log(err))
         }
